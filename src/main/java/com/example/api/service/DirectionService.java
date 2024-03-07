@@ -1,13 +1,14 @@
 package com.example.api.service;
 
-import com.example.api.domain.CandidateTest;
-import com.example.api.domain.Direction;
-import com.example.api.dto.DirectionDto;
+import com.example.api.dto.directionDto.DirectionCreateDto;
+import com.example.api.dto.directionDto.DirectionListDto;
+import com.example.api.dto.directionDto.DirectionUpdateDto;
+import com.example.api.exception.NotFoundException;
 
 import java.util.List;
 
 public interface DirectionService {
-    List<DirectionDto> getDirections();
-    void createDirection(DirectionDto direction);
-    void updateDirection(Long id, DirectionDto direction);
+    List<DirectionListDto> getDirections();
+    void createDirection(DirectionCreateDto direction);
+    void updateDirection(Long id, DirectionUpdateDto direction) throws NotFoundException;
 }

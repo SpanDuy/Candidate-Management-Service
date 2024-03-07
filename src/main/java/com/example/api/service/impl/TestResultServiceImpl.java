@@ -1,7 +1,7 @@
 package com.example.api.service.impl;
 
 import com.example.api.domain.TestResult;
-import com.example.api.dto.TestResultDto;
+import com.example.api.dto.testResultDto.TestResultDto;
 import com.example.api.repository.TestResultRepository;
 import com.example.api.service.TestResultService;
 import lombok.RequiredArgsConstructor;

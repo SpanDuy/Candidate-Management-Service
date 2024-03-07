@@ -1,8 +1,6 @@
 package com.example.api.service;
 
-import com.example.api.domain.Direction;
-import com.example.api.domain.TestResult;
-import com.example.api.dto.TestResultDto;
+import com.example.api.dto.testResultDto.TestResultDto;
 
 import java.util.List;
 

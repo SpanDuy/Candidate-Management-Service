@@ -1,4 +1,5 @@
-package com.example.api.dto;
+package com.example.api.dto.directionDto;
+
 
 import lombok.*;
 
@@ -7,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DirectionDto {
+public class DirectionListDto {
     private Long id;
     private String name;
     private String description;

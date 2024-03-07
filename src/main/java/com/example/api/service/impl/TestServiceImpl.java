@@ -1,9 +1,13 @@
 package com.example.api.service.impl;
 
+import com.example.api.domain.Direction;
 import com.example.api.domain.Test;
-import com.example.api.dto.TestDto;
+import com.example.api.dto.testDto.TestCreateDto;
+import com.example.api.dto.testDto.TestListDto;
+import com.example.api.dto.testDto.TestUpdateDto;
+import com.example.api.exception.NotFoundException;
+import com.example.api.repository.DirectionRepository;
 import com.example.api.repository.TestRepository;
-import com.example.api.service.TestResultService;
 import com.example.api.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,22 +20,33 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
 
     private final TestRepository testRepository;
+    private final DirectionRepository directionRepository;
     private final ModelMapper modelMapper;
 
     @Override
-    public List<TestDto> getTests() {
+    public List<TestListDto> getTests() {
         return testRepository.findAll().stream()
-                .map(test -> modelMapper.map(test, TestDto.class))
+                .map(test -> modelMapper.map(test, TestListDto.class))
                 .toList();
     }
 
     @Override
-    public void createTest(TestDto test) {
-        testRepository.save(modelMapper.map(test, Test.class));
+    public void createTest(TestCreateDto testDto) {
+        List<Direction> directions = directionRepository.findAllById(testDto.getApplicableDirections());
+        Test test = modelMapper.map(testDto, Test.class);
+        test.setApplicableDirections(directions);
+        testRepository.save(test);
     }
 
     @Override
-    public void updateTest(Long id, TestDto test) {
-        testRepository.save(modelMapper.map(test, Test.class));
+    public void updateTest(Long id, TestUpdateDto testDto) throws NotFoundException {
+        Test test = testRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Test", "Entity with id = " + id + "Not found"));
+
+        List<Direction> directions = directionRepository.findAllById(testDto.getApplicableDirections());
+        test.setNotNullFields(modelMapper.map(testDto, Test.class));
+        test.setApplicableDirections(directions);
+
+        testRepository.save(test);
     }
 }

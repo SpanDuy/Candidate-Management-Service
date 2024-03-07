@@ -1,7 +1,9 @@
 package com.example.api.controller;
 
-import com.example.api.domain.Candidate;
-import com.example.api.dto.CandidateDto;
+import com.example.api.dto.candidateDto.CandidateCreateDto;
+import com.example.api.dto.candidateDto.CandidateListDto;
+import com.example.api.dto.candidateDto.CandidateUpdateDto;
+import com.example.api.exception.NotFoundException;
 import com.example.api.service.CandidateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,20 +20,20 @@ public class CandidateController {
     private final CandidateService candidateService;
 
     @GetMapping("/all")
-    private ResponseEntity<List<CandidateDto>> findAllCandidates() {
-        List<CandidateDto> candidateDtos = candidateService.getCandidates();
+    private ResponseEntity<List<CandidateListDto>> findAllCandidates() {
+        List<CandidateListDto> candidateDtos = candidateService.getCandidates();
         return new ResponseEntity<>(candidateDtos, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    private ResponseEntity<Void> createCandidate(@RequestBody CandidateDto candidateDto) {
+    private ResponseEntity<Void> createCandidate(@RequestBody CandidateCreateDto candidateDto) {
         candidateService.createCandidate(candidateDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    private ResponseEntity<Void> updateCandidate(@RequestParam("id") Long id,
-                                                 @RequestBody CandidateDto candidateDto) {
+    private ResponseEntity<Void> updateCandidate(@PathVariable("id") Long id,
+                                                 @RequestBody CandidateUpdateDto candidateDto) throws NotFoundException {
         candidateService.updateCandidate(id, candidateDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

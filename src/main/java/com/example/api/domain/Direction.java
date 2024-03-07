@@ -20,4 +20,13 @@ public class Direction {
     private String name;
 
     private String description;
+
+    public void setNotNullFields(Direction newDirection) {
+        if (newDirection.name != null) {
+            this.name = newDirection.name;
+        }
+        if (newDirection.description != null) {
+            this.description = newDirection.description;
+        }
+    }
 }

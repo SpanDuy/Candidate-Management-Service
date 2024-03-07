@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Locale;
 
 @Getter
@@ -20,7 +21,7 @@ public class TestResult {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private LocalDateTime date;
+    private Date date;
 
     private Integer grade;
 }

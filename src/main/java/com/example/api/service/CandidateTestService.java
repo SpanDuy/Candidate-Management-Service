@@ -1,13 +1,16 @@
 package com.example.api.service;
 
-import com.example.api.domain.Candidate;
 import com.example.api.domain.CandidateTest;
-import com.example.api.dto.CandidateTestDto;
+import com.example.api.dto.candidateDto.CandidateUpdateDto;
+import com.example.api.dto.candidateTestDto.CandidateTestCreateDto;
+import com.example.api.dto.candidateTestDto.CandidateTestListDto;
+import com.example.api.dto.candidateTestDto.CandidateTestUpdateDto;
+import com.example.api.exception.NotFoundException;
 
 import java.util.List;
 
 public interface CandidateTestService {
-    List<CandidateTestDto> getCandidateTests();
-    void createCandidateTest(CandidateTestDto candidateTest);
-    void updateCandidateTest(Long id, CandidateTestDto candidateTest);
+    List<CandidateTestListDto> getCandidateTests();
+    void createCandidateTest(CandidateTestCreateDto candidateTest) throws NotFoundException;
+    void updateCandidateTest(Long id, CandidateTestUpdateDto candidateTest) throws NotFoundException;
 }

@@ -31,4 +31,25 @@ public class Candidate {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_id")
     private List<Direction> possibleDirections;
+
+    public void setNotNullFields(Candidate newCandidate) {
+        if (newCandidate.firstName != null) {
+            this.firstName = newCandidate.firstName;
+        }
+        if (newCandidate.lastName != null) {
+            this.lastName = newCandidate.lastName;
+        }
+        if (newCandidate.middleName != null) {
+            this.middleName = newCandidate.middleName;
+        }
+        if (newCandidate.photo != null) {
+            this.photo = newCandidate.photo;
+        }
+        if (newCandidate.description != null) {
+            this.description = newCandidate.description;
+        }
+        if (newCandidate.cvFile != null) {
+            this.cvFile = newCandidate.cvFile;
+        }
+    }
 }
