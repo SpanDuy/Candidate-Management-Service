@@ -35,16 +35,22 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public Page<CandidateListDto> getCandidates(Integer page, Integer pageSize, CandidateSearchCriteria candidateSearchCriteria) {
-        Specification<Candidate> spec = Specification
-                .where(CandidateSpecifications.firstNameLike(candidateSearchCriteria.getFirstName()))
-                .and(CandidateSpecifications.lastNameLike(candidateSearchCriteria.getLastName()))
-                .and(CandidateSpecifications.middleNameLike(candidateSearchCriteria.getMiddleName()))
-                .and(CandidateSpecifications.photoLike(candidateSearchCriteria.getPhoto()))
-                .and(CandidateSpecifications.descriptionLike(candidateSearchCriteria.getDescription()))
-                .and(CandidateSpecifications.cvFileLike(candidateSearchCriteria.getCvFile()));
-
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        Page<Candidate> candidates = candidateRepository.findAll(spec, pageRequest);
+        Page<Candidate> candidates;
+
+        if (candidateSearchCriteria == null) {
+            candidates = candidateRepository.findAll(pageRequest);
+        } else {
+            Specification<Candidate> spec = Specification
+                    .where(CandidateSpecifications.firstNameLike(candidateSearchCriteria.getFirstName()))
+                    .and(CandidateSpecifications.lastNameLike(candidateSearchCriteria.getLastName()))
+                    .and(CandidateSpecifications.middleNameLike(candidateSearchCriteria.getMiddleName()))
+                    .and(CandidateSpecifications.photoLike(candidateSearchCriteria.getPhoto()))
+                    .and(CandidateSpecifications.descriptionLike(candidateSearchCriteria.getDescription()))
+                    .and(CandidateSpecifications.cvFileLike(candidateSearchCriteria.getCvFile()));
+
+            candidates = candidateRepository.findAll(spec, pageRequest);
+        }
 
         return candidates.map(candidate -> modelMapper.map(candidate, CandidateListDto.class));
     }

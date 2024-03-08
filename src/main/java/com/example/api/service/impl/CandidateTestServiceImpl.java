@@ -38,11 +38,17 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     @Override
     public Page<CandidateTestListDto> getCandidateTests(Integer page, Integer pageSize,
                                                         CandidateTestSearchCriteria candidateTestSearchCriteria) {
-        Specification<CandidateTest> spec = Specification
-                .where(CandidateTestSpecifications.withSearchCriteria(candidateTestSearchCriteria));
-
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        Page<CandidateTest> candidateTests = candidateTestRepository.findAll(spec, pageRequest);
+        Page<CandidateTest> candidateTests;
+
+        if (candidateTestSearchCriteria == null) {
+            candidateTests = candidateTestRepository.findAll(pageRequest);
+        } else {
+            Specification<CandidateTest> spec = Specification
+                    .where(CandidateTestSpecifications.withSearchCriteria(candidateTestSearchCriteria));
+
+            candidateTests = candidateTestRepository.findAll(spec, pageRequest);
+        }
 
         return candidateTests.map(candidateTest -> modelMapper.map(candidateTest, CandidateTestListDto.class));
     }
@@ -84,6 +90,8 @@ public class CandidateTestServiceImpl implements CandidateTestService {
         List<TestResult> testResults = candidateTestDto.getTestResults().stream()
                 .map(testResultDto -> modelMapper.map(testResultDto, TestResult.class))
                 .toList();
+
+        candidateTest.getTestResults().addAll(testResults);
 
         candidateTestRepository.save(candidateTest);
     }

@@ -1,7 +1,9 @@
 package com.example.api.dto.testResultDto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -11,7 +13,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestResultDto {
-    @NotBlank
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     @NotBlank
     private Integer grade;

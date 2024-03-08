@@ -33,12 +33,18 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Page<TestListDto> getTests(Integer page, Integer pageSize, TestSearchCriteria testSearchCriteria) {
-        Specification<Test> spec = Specification
-                .where(TestSpecifications.nameLike(testSearchCriteria.getName()))
-                .and(TestSpecifications.descriptionLike(testSearchCriteria.getDescription()));
-
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        Page<Test> tests = testRepository.findAll(spec, pageRequest);
+        Page<Test> tests;
+
+        if (testSearchCriteria == null) {
+            tests = testRepository.findAll(pageRequest);
+        } else {
+            Specification<Test> spec = Specification
+                    .where(TestSpecifications.nameLike(testSearchCriteria.getName()))
+                    .and(TestSpecifications.descriptionLike(testSearchCriteria.getDescription()));
+
+            tests = testRepository.findAll(spec, pageRequest);
+        }
 
         return tests.map(test -> modelMapper.map(test, TestListDto.class));
     }

@@ -28,12 +28,18 @@ public class DirectionServiceImpl implements DirectionService {
 
     @Override
     public Page<DirectionListDto> getDirections(Integer page, Integer pageSize, DirectionSearchCriteria directionSearchCriteria) {
-        Specification<Direction> spec = Specification
-                .where(DirectionSpecifications.nameLike(directionSearchCriteria.getName()))
-                .and(DirectionSpecifications.descriptionLike(directionSearchCriteria.getDescription()));
-
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        Page<Direction> directions = directionRepository.findAll(spec, pageRequest);
+        Page<Direction> directions;
+
+        if (directionSearchCriteria == null) {
+            directions = directionRepository.findAll(pageRequest);
+        } else {
+            Specification<Direction> spec = Specification
+                    .where(DirectionSpecifications.nameLike(directionSearchCriteria.getName()))
+                    .and(DirectionSpecifications.descriptionLike(directionSearchCriteria.getDescription()));
+
+            directions = directionRepository.findAll(spec, pageRequest);
+        }
 
         return directions.map(direction -> modelMapper.map(direction, DirectionListDto.class));
     }
