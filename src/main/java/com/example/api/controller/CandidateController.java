@@ -2,10 +2,13 @@ package com.example.api.controller;
 
 import com.example.api.dto.candidateDto.CandidateCreateDto;
 import com.example.api.dto.candidateDto.CandidateListDto;
+import com.example.api.dto.candidateDto.CandidateSearchCriteria;
 import com.example.api.dto.candidateDto.CandidateUpdateDto;
 import com.example.api.exception.NotFoundException;
 import com.example.api.service.CandidateService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +22,11 @@ public class CandidateController {
 
     private final CandidateService candidateService;
 
-    @GetMapping("/all")
-    private ResponseEntity<List<CandidateListDto>> findAllCandidates() {
-        List<CandidateListDto> candidateDtos = candidateService.getCandidates();
+    @PostMapping("/find")
+    private ResponseEntity<Page<CandidateListDto>> findAllCandidates(@RequestParam(defaultValue = "0") Integer page,
+                                                                     @RequestParam(defaultValue = "5") Integer pageSize,
+                                                                     @RequestBody CandidateSearchCriteria candidateSearchCriteria) {
+        Page<CandidateListDto> candidateDtos = candidateService.getCandidates(page, pageSize, candidateSearchCriteria);
         return new ResponseEntity<>(candidateDtos, HttpStatus.OK);
     }
 

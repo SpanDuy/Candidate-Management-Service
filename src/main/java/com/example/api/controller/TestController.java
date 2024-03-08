@@ -1,11 +1,14 @@
 package com.example.api.controller;
 
+import com.example.api.dto.directionDto.DirectionSearchCriteria;
 import com.example.api.dto.testDto.TestCreateDto;
 import com.example.api.dto.testDto.TestListDto;
+import com.example.api.dto.testDto.TestSearchCriteria;
 import com.example.api.dto.testDto.TestUpdateDto;
 import com.example.api.exception.NotFoundException;
 import com.example.api.service.TestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +22,11 @@ public class TestController {
 
     private final TestService testService;
 
-    @GetMapping("/all")
-    private ResponseEntity<List<TestListDto>> findAllTests() {
-        List<TestListDto> testDtos = testService.getTests();
+    @PostMapping("/find")
+    private ResponseEntity<Page<TestListDto>> findAllTests(@RequestParam(defaultValue = "0") Integer page,
+                                                           @RequestParam(defaultValue = "5") Integer pageSize,
+                                                           @RequestBody(required = false) TestSearchCriteria testSearchCriteria) {
+        Page<TestListDto> testDtos = testService.getTests(page, pageSize, testSearchCriteria);
         return new ResponseEntity<>(testDtos, HttpStatus.OK);
     }
 

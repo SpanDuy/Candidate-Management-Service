@@ -3,12 +3,17 @@ package com.example.api.service.impl;
 import com.example.api.domain.Direction;
 import com.example.api.dto.directionDto.DirectionCreateDto;
 import com.example.api.dto.directionDto.DirectionListDto;
+import com.example.api.dto.directionDto.DirectionSearchCriteria;
 import com.example.api.dto.directionDto.DirectionUpdateDto;
 import com.example.api.exception.NotFoundException;
 import com.example.api.repository.DirectionRepository;
+import com.example.api.repository.specification.DirectionSpecifications;
 import com.example.api.service.DirectionService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,10 +27,15 @@ public class DirectionServiceImpl implements DirectionService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<DirectionListDto> getDirections() {
-        return directionRepository.findAll().stream()
-                .map(direction -> modelMapper.map(direction, DirectionListDto.class))
-                .toList();
+    public Page<DirectionListDto> getDirections(Integer page, Integer pageSize, DirectionSearchCriteria directionSearchCriteria) {
+        Specification<Direction> spec = Specification
+                .where(DirectionSpecifications.nameLike(directionSearchCriteria.getName()))
+                .and(DirectionSpecifications.descriptionLike(directionSearchCriteria.getDescription()));
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Page<Direction> directions = directionRepository.findAll(spec, pageRequest);
+
+        return directions.map(direction -> modelMapper.map(direction, DirectionListDto.class));
     }
 
     @Override

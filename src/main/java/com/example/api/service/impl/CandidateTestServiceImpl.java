@@ -1,17 +1,25 @@
 package com.example.api.service.impl;
 
 import com.example.api.domain.*;
+import com.example.api.dto.candidateDto.CandidateListDto;
+import com.example.api.dto.candidateDto.CandidateSearchCriteria;
 import com.example.api.dto.candidateTestDto.CandidateTestCreateDto;
 import com.example.api.dto.candidateTestDto.CandidateTestListDto;
+import com.example.api.dto.candidateTestDto.CandidateTestSearchCriteria;
 import com.example.api.dto.candidateTestDto.CandidateTestUpdateDto;
 import com.example.api.exception.NotFoundException;
 import com.example.api.repository.CandidateRepository;
 import com.example.api.repository.CandidateTestRepository;
 import com.example.api.repository.TestRepository;
 import com.example.api.repository.TestResultRepository;
+import com.example.api.repository.specification.CandidateSpecifications;
+import com.example.api.repository.specification.CandidateTestSpecifications;
 import com.example.api.service.CandidateTestService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,10 +36,15 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<CandidateTestListDto> getCandidateTests() {
-        return candidateTestRepository.findAll().stream()
-                .map(candidateTest -> modelMapper.map(candidateTest, CandidateTestListDto.class))
-                .toList();
+    public Page<CandidateTestListDto> getCandidateTests(Integer page, Integer pageSize,
+                                                        CandidateTestSearchCriteria candidateTestSearchCriteria) {
+        Specification<CandidateTest> spec = Specification
+                .where(CandidateTestSpecifications.withSearchCriteria(candidateTestSearchCriteria));
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Page<CandidateTest> candidateTests = candidateTestRepository.findAll(spec, pageRequest);
+
+        return candidateTests.map(candidateTest -> modelMapper.map(candidateTest, CandidateTestListDto.class));
     }
 
     @Override
