@@ -19,7 +19,8 @@ public class CandidateTest {
     @OneToOne
     private Candidate candidate;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "test_id")
     private Test test;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

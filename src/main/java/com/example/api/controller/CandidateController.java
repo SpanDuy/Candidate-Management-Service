@@ -41,7 +41,7 @@ public class CandidateController {
     }
 
     @PostMapping("/create")
-    private ResponseEntity<Void> createCandidate(@RequestBody CandidateCreateDto candidateDto) {
+    private ResponseEntity<Void> createCandidate(@RequestBody @Valid CandidateCreateDto candidateDto) {
 
         logger.info("Received request to create a new candidate.");
         candidateService.createCandidate(candidateDto);
@@ -52,7 +52,7 @@ public class CandidateController {
 
     @PutMapping("/update/{id}")
     private ResponseEntity<Void> updateCandidate(@PathVariable("id") Long id,
-                                                 @RequestBody CandidateUpdateDto candidateDto) throws NotFoundException {
+                                                 @RequestBody @Valid CandidateUpdateDto candidateDto) throws NotFoundException {
 
         logger.info("Received request to update candidate with ID: {}", id);
         candidateService.updateCandidate(id, candidateDto);

@@ -40,7 +40,7 @@ public class TestController {
     }
 
     @PostMapping("/create")
-    private ResponseEntity<Void> createTest(@RequestBody TestCreateDto testDto) {
+    private ResponseEntity<Void> createTest(@RequestBody @Valid TestCreateDto testDto) {
 
         logger.info("Received request to create a new test.");
         testService.createTest(testDto);
@@ -51,7 +51,7 @@ public class TestController {
 
     @PutMapping("/update/{id}")
     private ResponseEntity<Void> updateTest(@PathVariable("id") Long id,
-                                            @RequestBody TestUpdateDto testDto) throws NotFoundException {
+                                            @RequestBody @Valid TestUpdateDto testDto) throws NotFoundException {
 
         logger.info("Received request to update test with ID: {}", id);
         testService.updateTest(id, testDto);

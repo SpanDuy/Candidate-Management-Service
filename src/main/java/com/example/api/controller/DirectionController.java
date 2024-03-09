@@ -41,7 +41,7 @@ public class DirectionController {
     }
 
     @PostMapping("/create")
-    private ResponseEntity<Void> createDirection(@Valid @RequestBody DirectionCreateDto directionDto) {
+    private ResponseEntity<Void> createDirection(@RequestBody @Valid DirectionCreateDto directionDto) {
 
         logger.info("Received request to create a new direction.");
         directionService.createDirection(directionDto);
@@ -52,7 +52,7 @@ public class DirectionController {
 
     @PutMapping("/update/{id}")
     private ResponseEntity<Void> updateDirection(@PathVariable("id") Long id,
-                                                 @Valid @RequestBody DirectionUpdateDto directionDto) throws NotFoundException {
+                                                 @RequestBody @Valid DirectionUpdateDto directionDto) throws NotFoundException {
 
         logger.info("Received request to update direction with ID: {}", id);
         directionService.updateDirection(id, directionDto);

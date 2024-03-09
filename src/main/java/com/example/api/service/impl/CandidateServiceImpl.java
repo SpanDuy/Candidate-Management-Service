@@ -69,9 +69,11 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate candidate = candidateRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Candidate", "Entity with id = " + id + "Not found"));
 
-        List<Direction> directions = directionRepository.findAllById(candidateDto.getPossibleDirections());
         candidate.setNotNullFields(modelMapper.map(candidateDto, Candidate.class));
-        candidate.setPossibleDirections(directions);
+        if (candidateDto.getPossibleDirections() != null) {
+            List<Direction> directions = directionRepository.findAllById(candidateDto.getPossibleDirections());
+            candidate.setPossibleDirections(directions);
+        }
 
         candidateRepository.save(modelMapper.map(candidate, Candidate.class));
     }

@@ -38,7 +38,7 @@ public class CandidateTestController {
     }
 
     @PostMapping("/create")
-    private ResponseEntity<Void> createCandidateTest(@RequestBody CandidateTestCreateDto candidateTestDto) throws NotFoundException {
+    private ResponseEntity<Void> createCandidateTest(@RequestBody @Valid CandidateTestCreateDto candidateTestDto) throws NotFoundException {
 
         logger.info("Received request to create a new candidate test.");
         candidateTestService.createCandidateTest(candidateTestDto);
@@ -49,7 +49,7 @@ public class CandidateTestController {
 
     @PutMapping("/update/{id}")
     private ResponseEntity<Void> updateCandidateTest(@PathVariable("id") Long id,
-                                                     @RequestBody CandidateTestUpdateDto candidateTestDto) throws NotFoundException {
+                                                     @RequestBody @Valid CandidateTestUpdateDto candidateTestDto) throws NotFoundException {
         logger.info("Received request to update candidate test with ID: {}", id);
         candidateTestService.updateCandidateTest(id, candidateTestDto);
         logger.info("Candidate test with ID {} updated successfully.", id);
