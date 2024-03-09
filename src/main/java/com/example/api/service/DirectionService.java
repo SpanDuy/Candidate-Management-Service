@@ -7,8 +7,6 @@ import com.example.api.dto.directionDto.DirectionUpdateDto;
 import com.example.api.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface DirectionService {
     Page<DirectionListDto> getDirections(Integer page, Integer pageSize, DirectionSearchCriteria directionSearchCriteria);
     void createDirection(DirectionCreateDto direction);

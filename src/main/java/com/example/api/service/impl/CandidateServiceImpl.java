@@ -1,20 +1,15 @@
 package com.example.api.service.impl;
 
 import com.example.api.domain.Candidate;
-import com.example.api.domain.CandidateTest;
 import com.example.api.domain.Direction;
-import com.example.api.domain.Test;
 import com.example.api.dto.candidateDto.CandidateCreateDto;
 import com.example.api.dto.candidateDto.CandidateListDto;
 import com.example.api.dto.candidateDto.CandidateSearchCriteria;
 import com.example.api.dto.candidateDto.CandidateUpdateDto;
-import com.example.api.dto.testDto.TestListDto;
-import com.example.api.dto.testDto.TestSearchCriteria;
 import com.example.api.exception.NotFoundException;
 import com.example.api.repository.CandidateRepository;
 import com.example.api.repository.DirectionRepository;
 import com.example.api.repository.specification.CandidateSpecifications;
-import com.example.api.repository.specification.TestSpecifications;
 import com.example.api.service.CandidateService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

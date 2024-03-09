@@ -1,8 +1,6 @@
 package com.example.api.service.impl;
 
 import com.example.api.domain.*;
-import com.example.api.dto.candidateDto.CandidateListDto;
-import com.example.api.dto.candidateDto.CandidateSearchCriteria;
 import com.example.api.dto.candidateTestDto.CandidateTestCreateDto;
 import com.example.api.dto.candidateTestDto.CandidateTestListDto;
 import com.example.api.dto.candidateTestDto.CandidateTestSearchCriteria;
@@ -12,7 +10,6 @@ import com.example.api.repository.CandidateRepository;
 import com.example.api.repository.CandidateTestRepository;
 import com.example.api.repository.TestRepository;
 import com.example.api.repository.TestResultRepository;
-import com.example.api.repository.specification.CandidateSpecifications;
 import com.example.api.repository.specification.CandidateTestSpecifications;
 import com.example.api.service.CandidateTestService;
 import lombok.RequiredArgsConstructor;

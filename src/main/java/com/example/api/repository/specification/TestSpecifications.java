@@ -1,6 +1,5 @@
 package com.example.api.repository.specification;
 
-import com.example.api.domain.Direction;
 import com.example.api.domain.Test;
 import org.springframework.data.jpa.domain.Specification;
 

@@ -2,8 +2,6 @@ package com.example.api.service.impl;
 
 import com.example.api.domain.Direction;
 import com.example.api.domain.Test;
-import com.example.api.dto.directionDto.DirectionListDto;
-import com.example.api.dto.directionDto.DirectionSearchCriteria;
 import com.example.api.dto.testDto.TestCreateDto;
 import com.example.api.dto.testDto.TestListDto;
 import com.example.api.dto.testDto.TestSearchCriteria;
@@ -11,7 +9,6 @@ import com.example.api.dto.testDto.TestUpdateDto;
 import com.example.api.exception.NotFoundException;
 import com.example.api.repository.DirectionRepository;
 import com.example.api.repository.TestRepository;
-import com.example.api.repository.specification.DirectionSpecifications;
 import com.example.api.repository.specification.TestSpecifications;
 import com.example.api.service.TestService;
 import lombok.RequiredArgsConstructor;

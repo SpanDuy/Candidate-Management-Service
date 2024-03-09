@@ -7,8 +7,6 @@ import com.example.api.dto.candidateDto.CandidateUpdateDto;
 import com.example.api.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface CandidateService {
     Page<CandidateListDto> getCandidates(Integer page, Integer pageSize, CandidateSearchCriteria candidateSearchCriteria);
     void createCandidate(CandidateCreateDto candidate);

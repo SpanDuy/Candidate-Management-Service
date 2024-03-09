@@ -7,8 +7,6 @@ import com.example.api.dto.testDto.TestUpdateDto;
 import com.example.api.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface TestService {
     Page<TestListDto> getTests(Integer page, Integer pageSize, TestSearchCriteria testSearchCriteria);
     void createTest(TestCreateDto test);

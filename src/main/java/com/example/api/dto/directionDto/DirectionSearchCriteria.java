@@ -1,6 +1,5 @@
 package com.example.api.dto.directionDto;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

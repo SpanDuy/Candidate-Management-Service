@@ -1,18 +1,14 @@
 package com.example.api.repository.specification;
 
 import com.example.api.domain.CandidateTest;
-import com.example.api.domain.Test;
-import com.example.api.domain.TestResult;
 import com.example.api.dto.candidateTestDto.CandidateTestSearchCriteria;
 import com.example.api.dto.testResultDto.TestResultSearchCriteria;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CandidateTestSpecifications {

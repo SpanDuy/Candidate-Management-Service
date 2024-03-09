@@ -1,6 +1,5 @@
 package com.example.api.dto.candidateTestDto;
 
-import com.example.api.domain.TestResult;
 import com.example.api.dto.testResultDto.TestResultSearchCriteria;
 import lombok.Getter;
 
