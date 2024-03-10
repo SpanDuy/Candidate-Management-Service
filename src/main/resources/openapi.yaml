@@ -187,7 +187,7 @@ paths:
             examples:
               Find direction with name like direction:
                 value:
-                  name: "direction"
+                  name: "Direction"
 
   /api/v1/directions/create:
     post:
@@ -203,8 +203,8 @@ paths:
             examples:
               Create direction with name 'direction 3' and description 'description 3':
                 value:
-                  name: "direction 3"
-                  description: "description 3"
+                  name: "Direction 3"
+                  description: "Description 3"
 
   /api/v1/directions/update/{id}:
     put:
@@ -229,7 +229,7 @@ paths:
               Update direction with name id = 1 and rename description to 'new description 1':
                 value:
                   id: 1
-                  description: "new description 1"
+                  description: "New description 1"
 
   /api/v1/tests/find:
     post:

@@ -29,7 +29,6 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     private final CandidateTestRepository candidateTestRepository;
     private final CandidateRepository candidateRepository;
     private final TestRepository testRepository;
-    private final TestResultRepository testResultRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -39,6 +38,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
         Page<CandidateTest> candidateTests;
 
         if (candidateTestSearchCriteria == null) {
+            // SELECT * FROM candidate_test;
             candidateTests = candidateTestRepository.findAll(pageRequest);
         } else {
             Specification<CandidateTest> spec = Specification
@@ -72,23 +72,26 @@ public class CandidateTestServiceImpl implements CandidateTestService {
 
     @Override
     public void updateCandidateTest(Long id, CandidateTestUpdateDto candidateTestDto) throws NotFoundException {
-        Candidate candidate = candidateRepository.findById(candidateTestDto.getCandidate())
-                .orElseThrow(() -> new NotFoundException("Candidate", "Entity with id = " + candidateTestDto.getCandidate() + "Not found"));
-
-        Test test = testRepository.findById(candidateTestDto.getTest())
-                .orElseThrow(() -> new NotFoundException("Test", "Entity with id = " + candidateTestDto.getTest() + "Not found"));
 
         CandidateTest candidateTest = candidateTestRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Candidate", "Entity Test with id = " + id + "Not found"));
 
-        candidateTest.setCandidate(candidate);
-        candidateTest.setTest(test);
-
-        List<TestResult> testResults = candidateTestDto.getTestResults().stream()
-                .map(testResultDto -> modelMapper.map(testResultDto, TestResult.class))
-                .toList();
-
-        candidateTest.getTestResults().addAll(testResults);
+        if (candidateTestDto.getCandidate() != null) {
+            Candidate candidate = candidateRepository.findById(candidateTestDto.getCandidate())
+                    .orElseThrow(() -> new NotFoundException("Candidate", "Entity with id = " + candidateTestDto.getCandidate() + "Not found"));
+            candidateTest.setCandidate(candidate);
+        }
+        if (candidateTestDto.getTest() != null) {
+            Test test = testRepository.findById(candidateTestDto.getTest())
+                    .orElseThrow(() -> new NotFoundException("Test", "Entity with id = " + candidateTestDto.getTest() + "Not found"));
+            candidateTest.setTest(test);
+        }
+        if (candidateTestDto.getTestResults() != null) {
+            List<TestResult> testResults = candidateTestDto.getTestResults().stream()
+                    .map(testResultDto -> modelMapper.map(testResultDto, TestResult.class))
+                    .toList();
+            candidateTest.getTestResults().addAll(testResults);
+        }
 
         candidateTestRepository.save(candidateTest);
     }

@@ -51,6 +51,7 @@ public class TestServiceImpl implements TestService {
         List<Direction> directions = directionRepository.findAllById(testDto.getApplicableDirections());
         Test test = modelMapper.map(testDto, Test.class);
         test.setApplicableDirections(directions);
+
         testRepository.save(test);
     }
 
@@ -59,9 +60,11 @@ public class TestServiceImpl implements TestService {
         Test test = testRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Test", "Entity with id = " + id + "Not found"));
 
-        List<Direction> directions = directionRepository.findAllById(testDto.getApplicableDirections());
+        if (testDto.getApplicableDirections() != null) {
+            List<Direction> directions = directionRepository.findAllById(testDto.getApplicableDirections());
+            test.setApplicableDirections(directions);
+        }
         test.setNotNullFields(modelMapper.map(testDto, Test.class));
-        test.setApplicableDirections(directions);
 
         testRepository.save(test);
     }

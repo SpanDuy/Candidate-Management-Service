@@ -52,10 +52,11 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void createCandidate(CandidateCreateDto candidateDto) {
-        List<Direction> directions = directionRepository.findAllById(candidateDto.getPossibleDirections());
         Candidate candidate = modelMapper.map(candidateDto, Candidate.class);
-        candidate.setPossibleDirections(directions);
-
+        if (candidateDto.getPossibleDirections() != null) {
+            List<Direction> directions = directionRepository.findAllById(candidateDto.getPossibleDirections());
+            candidate.setPossibleDirections(directions);
+        }
         candidateRepository.save(candidate);
     }
 
